@@ -1,6 +1,8 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import Newsletter from "@/components/Newsletter";
 
 export const metadata = {
   title: "Sweet Haven - Doces Artesanais",
@@ -23,12 +25,18 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="pt-BR">
       <body className="bg-white min-h-screen flex flex-col">
         <Navbar />
-        <main className="flex-grow">{children}</main>
+        {children}
+        <Newsletter />
+        <FloatingWhatsApp />
         <Footer />
       </body>
     </html>
