@@ -1,5 +1,6 @@
 "use client";
 
+import { useCart } from "@/components/CartContext";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,6 +8,7 @@ import { useState } from "react";
 
 export default function Produtos() {
   const [selectedCategory, setSelectedCategory] = useState("todos");
+  const { addToCart } = useCart();
 
   const categories = [
     { id: "todos", name: "Todos" },
@@ -22,6 +24,7 @@ export default function Produtos() {
       name: "Brigadeiro Gourmet de Pistache",
       category: "brigadeiros",
       description: "Brigadeiro cremoso com cobertura de pistache triturado.",
+      price: 5.0,
       image:
         "https://images.pexels.com/photos/3776942/pexels-photo-3776942.jpeg?auto=compress&cs=tinysrgb&w=800",
     },
@@ -30,6 +33,7 @@ export default function Produtos() {
       name: "Brigadeiro de Nutella",
       category: "brigadeiros",
       description: "Irresistível brigadeiro recheado com Nutella.",
+      price: 6.0,
       image:
         "https://images.pexels.com/photos/3776942/pexels-photo-3776942.jpeg?auto=compress&cs=tinysrgb&w=800",
     },
@@ -38,6 +42,7 @@ export default function Produtos() {
       name: "Trufa de Chocolate Belga",
       category: "trufas",
       description: "Trufa premium com chocolate belga 70% cacau.",
+      price: 8.5,
       image:
         "https://images.pexels.com/photos/1055270/pexels-photo-1055270.jpeg?auto=compress&cs=tinysrgb&w=800",
     },
@@ -46,6 +51,7 @@ export default function Produtos() {
       name: "Caixa Premium 12 Unidades",
       category: "caixas",
       description: "Caixa elegante com 12 doces sortidos.",
+      price: 60.0,
       image:
         "https://images.pexels.com/photos/3776942/pexels-photo-3776942.jpeg?auto=compress&cs=tinysrgb&w=800",
     },
@@ -54,6 +60,7 @@ export default function Produtos() {
       name: "Torta de Brigadeiro",
       category: "sobremesas",
       description: "Torta cremosa com camadas de brigadeiro artesanal.",
+      price: 45.0,
       image:
         "https://images.pexels.com/photos/1120970/pexels-photo-1120970.jpeg?auto=compress&cs=tinysrgb&w=800",
     },
@@ -138,8 +145,6 @@ export default function Produtos() {
                   width={800}
                   height={600}
                   className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                  placeholder="blur"
-                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD..."
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#5C3A21]/60 to-transparent"></div>
               </div>
@@ -155,61 +160,28 @@ export default function Produtos() {
                   {product.name}
                 </h3>
                 <p
-                  className="text-gray-600 mb-4"
+                  className="text-gray-600 mb-2"
                   style={{ fontFamily: "'Quicksand', sans-serif" }}
                 >
                   {product.description}
                 </p>
-                <Link
-                  href="/contato"
-                  className="inline-block px-6 py-2 rounded-full text-white font-medium transition-all duration-300 hover:shadow-lg hover:scale-105"
-                  style={{
-                    backgroundColor: "#B9E5EE",
-                    fontFamily: "'Quicksand', sans-serif",
-                  }}
+                <p
+                  className="text-gray-800 font-semibold mb-4"
+                  style={{ fontFamily: "'Quicksand', sans-serif" }}
                 >
-                  Encomendar
-                </Link>
+                  R$ {product.price.toFixed(2)}
+                </p>
+                <button
+                  onClick={() => addToCart(product)}
+                  className="mt-4 w-full px-6 py-2 rounded-full bg-[#5C3A21] text-white font-medium transition-all duration-300 hover:scale-105"
+                  style={{ fontFamily: "'Quicksand', sans-serif" }}
+                >
+                  Adicionar ao Carrinho
+                </button>
               </div>
             </motion.article>
           ))}
         </section>
-
-        {/* CTA Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mt-20 text-center bg-gradient-to-br from-[#B9E5EE]/20 to-white p-12 rounded-3xl"
-        >
-          <h2
-            className="text-3xl md:text-4xl font-bold mb-4"
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              color: "#5C3A21",
-            }}
-          >
-            Não encontrou o que procura?
-          </h2>
-          <p
-            className="text-lg text-gray-600 mb-6"
-            style={{ fontFamily: "'Quicksand', sans-serif" }}
-          >
-            Entre em contato e faremos algo especial para você!
-          </p>
-          <Link
-            href="/contato"
-            className="inline-block px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105"
-            style={{
-              backgroundColor: "#5C3A21",
-              color: "white",
-              fontFamily: "'Quicksand', sans-serif",
-            }}
-          >
-            Fale Conosco
-          </Link>
-        </motion.section>
       </div>
     </main>
   );

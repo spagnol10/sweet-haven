@@ -1,18 +1,18 @@
 "use client";
 
-import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { motion } from "framer-motion";
 import { ChevronRight, Star } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    setIsVisible(true);
+    const timer = setTimeout(() => setIsVisible(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   const products = [

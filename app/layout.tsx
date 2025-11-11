@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 import Newsletter from "@/components/Newsletter";
+import { CartProvider } from "@/components/CartContext";
 
 export const metadata = {
   title: "Sweet Haven - Doces Artesanais",
@@ -33,11 +34,13 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className="bg-white min-h-screen flex flex-col">
-        <Navbar />
-        {children}
-        <Newsletter />
-        <FloatingWhatsApp />
-        <Footer />
+        <CartProvider>
+          <Navbar />
+          {children}
+          {/* <Newsletter /> */}
+          <FloatingWhatsApp />
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );

@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import emailjs from "@emailjs/browser"; // ✅ importe o EmailJS
 
 export default function Contato() {
   const [formData, setFormData] = useState({
@@ -24,10 +25,28 @@ export default function Contato() {
       return;
     }
 
-    toast.success(
-      "Mensagem enviada com sucesso! Entraremos em contato em breve."
-    );
-    setFormData({ name: "", message: "" });
+    emailjs
+      .send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        {
+          name: formData.name,
+          message: formData.message,
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+      )
+      .then(
+        () => {
+          toast.success(
+            "Mensagem enviada com sucesso! Entraremos em contato em breve."
+          );
+          setFormData({ name: "", message: "" });
+        },
+        (error) => {
+          console.error(error);
+          toast.error("Erro ao enviar a mensagem. Tente novamente mais tarde.");
+        }
+      );
   };
 
   const handleChange = (
